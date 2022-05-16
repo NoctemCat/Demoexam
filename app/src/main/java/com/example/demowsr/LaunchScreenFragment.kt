@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.fragment.app.FragmentActivity
 
 @SuppressLint("CustomSplashScreen")
 class LaunchScreenFragment : Fragment() {
@@ -24,11 +23,7 @@ class LaunchScreenFragment : Fragment() {
         val prBar = view.findViewById<ProgressBar>(R.id.progress_bar)
         prBar.progress = 100
         Handler(Looper.getMainLooper()).postDelayed({
-            val manager = (view.context as FragmentActivity).supportFragmentManager
-            manager.beginTransaction()
-                .setCustomAnimations(androidx.appcompat.R.anim.abc_slide_in_bottom , androidx.appcompat.R.anim.abc_slide_out_top)
-                .replace(R.id.root_fragment, OnBoardingFragment.newInstance())
-                .commit()
+            startFragment(view.context, OnBoardingFragment.newInstance(0))
         },2000)
     }
 
@@ -37,14 +32,3 @@ class LaunchScreenFragment : Fragment() {
             LaunchScreenFragment()
     }
 }
-
-
-//val executor = Executors.newSingleThreadExecutor()
-//val handler = Handler(Looper.getMainLooper())
-//
-//executor.execute {
-//
-//    handler.post {
-//
-//    }
-//}

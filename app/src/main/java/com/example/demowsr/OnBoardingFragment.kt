@@ -21,6 +21,15 @@ class OnBoardingFragment : Fragment() {
     private lateinit var obBoardingCollectionAdapter : OnBoardingCollectionAdapter
     private lateinit var viewPager: ViewPager2
 
+    private var startPage:Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            startPage = it.getInt("page")
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,8 +42,10 @@ class OnBoardingFragment : Fragment() {
         obBoardingCollectionAdapter = OnBoardingCollectionAdapter(this)
         viewPager = view.findViewById(R.id.on_boarding_pager)
         viewPager.adapter = obBoardingCollectionAdapter
-
         viewPager.registerOnPageChangeCallback(OnPageChanged())
+        viewPager.post {
+            viewPager.currentItem = startPage
+        }
 
         binding.ivBoarding1.setOnClickListener { viewPager.currentItem = 0 }
         binding.ivBoarding2.setOnClickListener { viewPager.currentItem = 1 }
@@ -54,8 +65,12 @@ class OnBoardingFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() =
-            OnBoardingFragment()
+        fun newInstance(page: Int) =
+            OnBoardingFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("page", page)
+                }
+            }
     }
 }
 
@@ -97,16 +112,18 @@ class OnBoardingScreen2Fragment : Fragment() {
     ): View {
         binding = FragmentOnBoardingScreen2Binding.inflate(layoutInflater)
 
-        binding.tvScipAuth.setOnClickListener {
-            val manager = (it.context as FragmentActivity).supportFragmentManager
-            manager.beginTransaction()
-                .setReorderingAllowed(true)
-                .replace(R.id.root_fragment, MainScreenFragment.newInstance())
-                .commit()
-        }
-
         if(!isNetworkAvailable(binding.root.context)){
             binding.tvScipAuth.visibility = View.VISIBLE
+        }
+
+        binding.tvScipAuth.setOnClickListener {
+            startFragment(it.context, MainScreenFragment.newInstance())
+        }
+        binding.signInButton.setOnClickListener {
+            startFragment(it.context, SignInFragment.newInstance())
+        }
+        binding.signUpButton.setOnClickListener {
+            startFragment(it.context, SignUpFragment.newInstance())
         }
 
         return binding.root
