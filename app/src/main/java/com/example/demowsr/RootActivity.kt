@@ -1,13 +1,14 @@
 package com.example.demowsr
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.demowsr.databinding.ActivityRootBinding
 
 class RootActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRootBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Demowsr)
         super.onCreate(savedInstanceState)
         binding = ActivityRootBinding.inflate(layoutInflater)
         setContentView(binding.root)

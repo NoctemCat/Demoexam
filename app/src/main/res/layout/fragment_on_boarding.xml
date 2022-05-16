@@ -26,22 +26,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85">
+        app:layout_constraintVertical_bias="0.93">
 
         <ImageView
             android:id="@+id/iv_boarding_1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:clickable="true"
             android:padding="5dp"
-            android:scaleType="centerInside" />
+            android:scaleType="center"
+            app:srcCompat="@drawable/circle" />
 
         <ImageView
             android:id="@+id/iv_boarding_2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
             android:clickable="true"
             android:padding="5dp"
-            android:scaleType="centerInside" />
+            android:scaleType="center"
+            app:srcCompat="@drawable/circle" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

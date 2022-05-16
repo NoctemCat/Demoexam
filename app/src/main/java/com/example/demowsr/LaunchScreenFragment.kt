@@ -7,10 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.FragmentActivity
-import org.json.JSONException
-import org.json.JSONObject
-import java.util.concurrent.Executors
 
 class LaunchScreenFragment : Fragment() {
 
@@ -28,9 +26,13 @@ class LaunchScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Handler(Looper.getMainLooper()).postDelayed({
+            val prBar = view.findViewById<ProgressBar>(R.id.progress_bar)
+            prBar.progress = 100
+        },1000)
+        Handler(Looper.getMainLooper()).postDelayed({
             val manager = (view.context as FragmentActivity).supportFragmentManager
             manager.beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in , android.R.anim.fade_out)
+                .setCustomAnimations(androidx.appcompat.R.anim.abc_slide_in_bottom , androidx.appcompat.R.anim.abc_slide_out_top)
                 .replace(R.id.root_fragment, OnBoardingFragment.newInstance())
                 .commit()
         },2000)
