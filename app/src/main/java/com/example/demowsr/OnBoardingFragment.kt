@@ -6,9 +6,12 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.demowsr.databinding.FragmentOnBoardingBinding
 import kotlin.math.abs
 
 class OnBoardingFragment : Fragment() {
+    private lateinit var binding :FragmentOnBoardingBinding
+
     private lateinit var obBoardingCollectionAdapter : OnBoardingCollectionAdapter
     private lateinit var viewPager: ViewPager2
 
@@ -16,7 +19,8 @@ class OnBoardingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_on_boarding, container, false)
+        binding = FragmentOnBoardingBinding.inflate(layoutInflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -24,18 +28,27 @@ class OnBoardingFragment : Fragment() {
         viewPager = view.findViewById(R.id.on_boarding_pager)
         viewPager.adapter = obBoardingCollectionAdapter
 
-        context?.let {
-            view.setOnTouchListener(object : OnSwipeTouchListener(it) {
-                override fun onSwipeLeft() {
-                    super.onSwipeLeft()
-                    viewPager.currentItem = viewPager.currentItem - 1
-                }
+        viewPager.registerOnPageChangeCallback(OnPageChanged())
 
-                override fun onSwipeRight() {
-                    super.onSwipeRight()
-                    viewPager.currentItem = viewPager.currentItem + 1
-                }
-            })
+        binding.ivBoarding1.setOnClickListener {
+            viewPager.currentItem = 0
+        }
+
+        binding.ivBoarding2.setOnClickListener {
+            viewPager.currentItem = 1
+        }
+    }
+
+    inner class OnPageChanged : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            if(position == 0){
+                binding.ivBoarding1.setImageResource(R.drawable.circle_active)
+                binding.ivBoarding2.setImageResource(R.drawable.circle)
+            }else{
+                binding.ivBoarding1.setImageResource(R.drawable.circle)
+                binding.ivBoarding2.setImageResource(R.drawable.circle_active)
+            }
         }
     }
 
@@ -44,6 +57,7 @@ class OnBoardingFragment : Fragment() {
             OnBoardingFragment()
     }
 }
+
 
 class OnBoardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
@@ -92,67 +106,4 @@ class OnBoardingScreen2Fragment : Fragment() {
         fun newInstance() =
             OnBoardingScreen2Fragment()
     }
-}
-
-open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
-
-    private val gestureDetector: GestureDetector
-
-    companion object {
-        private const val SWIPE_THRESHOLD = 100
-        private const val SWIPE_VELOCITY_THRESHOLD = 100
-    }
-
-    init {
-        gestureDetector = GestureDetector(ctx, GestureListener())
-    }
-
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
-        return gestureDetector.onTouchEvent(event)
-    }
-
-    private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
-
-
-        override fun onDown(e: MotionEvent): Boolean {
-            return true
-        }
-
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-            var result = false
-            try {
-                val diffY = e2.y - e1.y
-                val diffX = e2.x - e1.x
-                if (abs(diffX) > abs(diffY)) {
-                    if (abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            onSwipeRight()
-                        } else {
-                            onSwipeLeft()
-                        }
-                        result = true
-                    }
-                } else if (abs(diffY) > SWIPE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffY > 0) {
-                        onSwipeBottom()
-                    } else {
-                        onSwipeTop()
-                    }
-                    result = true
-                }
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-
-            return result
-        }
-    }
-
-    open fun onSwipeRight() {}
-
-    open fun onSwipeLeft() {}
-
-    open fun onSwipeTop() {}
-
-    open fun onSwipeBottom() {}
 }
