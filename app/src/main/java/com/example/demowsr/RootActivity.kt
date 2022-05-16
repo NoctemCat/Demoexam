@@ -17,6 +17,6 @@ class RootActivity : AppCompatActivity() {
             setReorderingAllowed(true).
             setCustomAnimations(android.R.anim.fade_in , android.R.anim.fade_out).
             replace(binding.rootFragment.id, LaunchScreenFragment.newInstance()).
-            commit();
+            commit()
     }
 }

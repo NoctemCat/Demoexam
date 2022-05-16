@@ -3,12 +3,10 @@ package com.example.demowsr
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -26,7 +24,7 @@ class OnBoardingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOnBoardingBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -63,7 +61,7 @@ class OnBoardingFragment : Fragment() {
 
 class OnBoardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fragment){
     override fun getItemCount(): Int {
-        return 2;
+        return 2
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -77,9 +75,6 @@ class OnBoardingCollectionAdapter(fragment: Fragment) : FragmentStateAdapter(fra
 }
 
 class OnBoardingScreen1Fragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -94,12 +89,12 @@ class OnBoardingScreen1Fragment : Fragment() {
 }
 
 class OnBoardingScreen2Fragment : Fragment() {
-    lateinit var binding: FragmentOnBoardingScreen2Binding
+    private lateinit var binding: FragmentOnBoardingScreen2Binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOnBoardingScreen2Binding.inflate(layoutInflater)
 
         binding.tvScipAuth.setOnClickListener {

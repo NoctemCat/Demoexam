@@ -1,5 +1,6 @@
 package com.example.demowsr
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,13 +11,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.FragmentActivity
 
+@SuppressLint("CustomSplashScreen")
 class LaunchScreenFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,10 +21,8 @@ class LaunchScreenFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            val prBar = view.findViewById<ProgressBar>(R.id.progress_bar)
-            prBar.progress = 100
-        },1000)
+        val prBar = view.findViewById<ProgressBar>(R.id.progress_bar)
+        prBar.progress = 100
         Handler(Looper.getMainLooper()).postDelayed({
             val manager = (view.context as FragmentActivity).supportFragmentManager
             manager.beginTransaction()
