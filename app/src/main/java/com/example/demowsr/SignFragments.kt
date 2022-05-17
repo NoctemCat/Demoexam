@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.demowsr.databinding.FragmentSignInBinding
@@ -86,7 +85,6 @@ class SignUpFragment : Fragment() {
     }
 
     private fun onClickRegister() {
-
         if(etIsEmpty(binding.etMail)){
             etShowError(binding.etMail, "Пустое поле почты")
             return

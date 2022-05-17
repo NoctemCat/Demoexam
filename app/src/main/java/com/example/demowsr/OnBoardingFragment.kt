@@ -8,12 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.demowsr.databinding.FragmentOnBoardingBinding
 import com.example.demowsr.databinding.FragmentOnBoardingScreen2Binding
-
 
 class OnBoardingFragment : Fragment() {
     private lateinit var binding :FragmentOnBoardingBinding
@@ -42,26 +40,25 @@ class OnBoardingFragment : Fragment() {
         obBoardingCollectionAdapter = OnBoardingCollectionAdapter(this)
         viewPager = view.findViewById(R.id.on_boarding_pager)
         viewPager.adapter = obBoardingCollectionAdapter
-        viewPager.registerOnPageChangeCallback(OnPageChanged())
+        viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if(position == 0){
+                    binding.ivBoarding1.setImageResource(R.drawable.circle_active)
+                    binding.ivBoarding2.setImageResource(R.drawable.circle)
+                }else{
+                    binding.ivBoarding1.setImageResource(R.drawable.circle)
+                    binding.ivBoarding2.setImageResource(R.drawable.circle_active)
+                }
+            }
+        })
+
         viewPager.post {
             viewPager.currentItem = startPage
         }
 
         binding.ivBoarding1.setOnClickListener { viewPager.currentItem = 0 }
         binding.ivBoarding2.setOnClickListener { viewPager.currentItem = 1 }
-    }
-
-    inner class OnPageChanged : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            if(position == 0){
-                binding.ivBoarding1.setImageResource(R.drawable.circle_active)
-                binding.ivBoarding2.setImageResource(R.drawable.circle)
-            }else{
-                binding.ivBoarding1.setImageResource(R.drawable.circle)
-                binding.ivBoarding2.setImageResource(R.drawable.circle_active)
-            }
-        }
     }
 
     companion object {
